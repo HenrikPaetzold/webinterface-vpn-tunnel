@@ -95,8 +95,7 @@ const memoryChart = new Chart(document.getElementById('memoryChart'), {
             data: [],
             backgroundColor: ['#ff6384', '#36a2eb']
         }]
-    },
-    options: chartOptions
+    }
 });
 
 // Disk Chart (in GB)
@@ -109,8 +108,7 @@ const diskChart = new Chart(document.getElementById('diskChart'), {
             data: [],
             backgroundColor: ['#4bc0c0', '#ffcd56']
         }]
-    },
-    options: chartOptions
+    }
 });
 
 // Network Chart (in KB)

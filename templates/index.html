@@ -5,104 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Enhanced System Stats</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-        body { font-family: Arial, sans-serif; background-color: #f4f4f9; color: #333; margin: 0; padding: 0; }
-        .container { width: 90%; margin: auto; padding: 20px; }
-        h1 { text-align: center; color: #0073e6; }
-        canvas { max-width: 100%; height: auto; margin: 20px auto; }
-    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
         <h1>System Statistics</h1>
+        <button id="darkModeToggle">
+            <i id="modeIcon" class="fas fa-sun"></i> <!-- Anfangs Icon als Sonne -->
+        </button>
         <canvas id="loadChart"></canvas>
         <canvas id="memoryChart"></canvas>
         <canvas id="diskChart"></canvas>
         <canvas id="networkChart"></canvas>
-        <canvas id="tempGauge"></canvas>
+        <canvas id="tempGraph"></canvas>
     </div>
-    <script>
-        async function fetchStats() {
-            const response = await fetch('/stats');
-            return response.json();
-        }
-
-        function updateCharts(stats) {
-            // Load Average
-            loadChart.data.datasets[0].data = stats.load_avg;
-            loadChart.update();
-
-            // Memory Usage
-            memoryChart.data.datasets[0].data = [stats.memory.used, stats.memory.total - stats.memory.used];
-            memoryChart.update();
-
-            // Disk Usage
-            diskChart.data.datasets[0].data = [stats.disk.used, stats.disk.total - stats.disk.used];
-            diskChart.update();
-
-            // Network
-            networkChart.data.datasets[0].data.push(stats.network.sent);
-            networkChart.data.datasets[1].data.push(stats.network.received);
-            if (networkChart.data.labels.length > 20) networkChart.data.labels.shift();
-            networkChart.update();
-
-            // Temperature
-            tempGauge.data.datasets[0].data[0] = stats.cpu_temp;
-            tempGauge.update();
-        }
-
-        const loadChart = new Chart(document.getElementById('loadChart'), {
-            type: 'bar',
-            data: {
-                labels: ['1 min', '5 min', '15 min'],
-                datasets: [{ label: 'Load Average', data: [], backgroundColor: '#0073e6' }]
-            },
-            options: { responsive: true }
-        });
-
-        const memoryChart = new Chart(document.getElementById('memoryChart'), {
-            type: 'doughnut',
-            data: {
-                labels: ['Used', 'Free'],
-                datasets: [{ label: 'Memory Usage', data: [], backgroundColor: ['#ff6384', '#36a2eb'] }]
-            },
-            options: { responsive: true }
-        });
-
-        const diskChart = new Chart(document.getElementById('diskChart'), {
-            type: 'doughnut',
-            data: {
-                labels: ['Used', 'Free'],
-                datasets: [{ label: 'Disk Usage', data: [], backgroundColor: ['#4bc0c0', '#ffcd56'] }]
-            },
-            options: { responsive: true }
-        });
-
-        const networkChart = new Chart(document.getElementById('networkChart'), {
-            type: 'line',
-            data: {
-                labels: Array(20).fill(''),
-                datasets: [
-                    { label: 'Sent', data: [], borderColor: '#0073e6', fill: false },
-                    { label: 'Received', data: [], borderColor: '#ff6384', fill: false }
-                ]
-            },
-            options: { responsive: true }
-        });
-
-        const tempGauge = new Chart(document.getElementById('tempGauge'), {
-            type: 'doughnut',
-            data: {
-                labels: ['CPU Temp', 'Remaining'],
-                datasets: [{ label: 'CPU Temperature', data: [0, 100], backgroundColor: ['#ff4500', '#36a2eb'] }]
-            },
-            options: { responsive: true, circumference: Math.PI, rotation: -Math.PI }
-        });
-
-        setInterval(async () => {
-            const stats = await fetchStats();
-            updateCharts(stats);
-        }, 2000);
-    </script>
+    <script src="main.js"></script>
 </body>
 </html>

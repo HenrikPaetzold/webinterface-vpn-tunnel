@@ -1,7 +1,6 @@
 from flask import Flask, jsonify, render_template
 import psutil
 import os
-import time
 
 app = Flask(__name__)
 
@@ -24,9 +23,32 @@ def get_system_stats():
 def index():
     return render_template("index.html")
 
-@app.route("/stats")
+@app.route('/stats')
 def stats():
-    return jsonify(get_system_stats())
+    # Holt die Systemstatistiken
+    load = psutil.getloadavg()  # Holt die Load-Avg für 1, 5 und 15 Minuten
+    memory = psutil.virtual_memory()  # Holt die Speicherinformationen
+    disk = psutil.disk_usage('/')  # Holt die Festplattennutzung
+    network = psutil.net_io_counters()  # Holt Netzwerkstatistiken
+    temp = psutil.sensors_temperatures().get('cpu_thermal', [])[0].current if psutil.sensors_temperatures() else 0  # Holt die CPU-Temperatur
 
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=80)
+    # Gebe die Daten als JSON zurück
+    return jsonify({
+        'load': load,
+        'memory': {
+            'used': memory.used,
+            'free': memory.free,
+        },
+        'disk': {
+            'used': disk.used,
+            'free': disk.free,
+        },
+        'network': {
+            'sent': network.bytes_sent,
+            'received': network.bytes_recv,
+        },
+        'cpuTemperature': temp  # Aktuelle CPU-Temperatur zurückgeben
+    })
+
+if __name__ == '__main__':
+    app.run(host="0.0.0.0", port=80, debug=True)  # Läuft auf allen IP-Adressen des Hosts und Port 80

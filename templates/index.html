@@ -10,8 +10,8 @@
     <!-- Font Awesome über CDN einbinden für das Icon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     
-    <!-- Deine CSS-Datei im 'static' Ordner -->
-    <link rel="stylesheet" href="static/style.css">
+    <!-- Verwende url_for, um den richtigen Pfad zu den statischen Dateien zu bekommen -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <div class="container">
@@ -30,7 +30,7 @@
         <canvas id="tempGraph"></canvas>
     </div>
     
-    <!-- Deine JavaScript-Datei im 'static' Ordner -->
-    <script src="static/main.js"></script>
+    <!-- Verwende url_for, um den richtigen Pfad zu den statischen Dateien zu bekommen -->
+    <script src="{{ url_for('static', filename='main.js') }}"></script>
 </body>
 </html>

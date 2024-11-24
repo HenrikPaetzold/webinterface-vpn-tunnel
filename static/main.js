@@ -266,3 +266,32 @@ darkModeButton.addEventListener('click', () => {
     // Farbänderungen nach dem Wechsel anwenden
     updateChartColors();
 });
+
+// Funktion zum Abrufen der Quickstats
+async function fetchQuickStats() {
+    const response = await fetch('/quickstats');
+    const stats = await response.json();
+
+    // Service Status (wireguard, hostapd, dnsmasq, dhcpcd)
+    const services = stats.services;
+    const serviceStatus = services.every(service => service.status) ? "active" : "inactive";
+    document.getElementById('serviceStatus').className = serviceStatus;
+    document.getElementById('serviceStatus').textContent = serviceStatus.charAt(0).toUpperCase() + serviceStatus.slice(1);
+
+    // Tunnelling Status (WireGuard)
+    const tunnellingStatus = stats.wireguardStatus ? "active" : "inactive";
+    document.getElementById('tunnellingStatus').className = tunnellingStatus;
+    document.getElementById('tunnellingStatus').textContent = tunnellingStatus.charAt(0).toUpperCase() + tunnellingStatus.slice(1);
+
+    // Uptime
+    document.getElementById('uptimeStatus').textContent = stats.uptime;
+
+    // Connected Devices
+    document.getElementById('connectedDevices').textContent = stats.connectedDevices;
+}
+
+// Aufruf der Funktion zur Initialisierung der Quickstats
+fetchQuickStats();
+
+// Intervall für das regelmäßige Abrufen der Daten (alle 5 Sekunden)
+setInterval(fetchQuickStats, 5000);

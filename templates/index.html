@@ -15,12 +15,32 @@
 </head>
 <body>
     <div class="container">
-        <h1>System Statistics</h1>
+
+        <div class="header">
+            <h1>System Statistics</h1>
+            <button id="darkModeToggle">
+                <i id="modeIcon" class="fas fa-sun"></i>
+            </button>
+        </div>
+        <div id="qCont">
+            <div class="quickstats">
+                <h2>Quickstats</h2>
+                <div class="status-item">
+                    <strong>Service:</strong> <span>Loading</span>
+                </div>
+                <div class="status-item">
+                    <strong>Tunnelling:</strong> <span>Loading</span>
+                </div>
+                <div class="status-item">
+                    <strong>Uptime:</strong> <span>Loading</span>
+                </div>
+                <div class="status-item">
+                    <strong>Connected Devices:</strong> <span class="device-count">Loading</span>
+                </div>
+            </div>
+        </div>
         
-        <!-- Dark Mode Toggle Button mit Icon -->
-        <button id="darkModeToggle">
-            <i id="modeIcon" class="fas fa-sun"></i> <!-- Anfangs Icon als Sonne -->
-        </button>
+        
         
         <!-- Canvas für Diagramme -->
         <canvas id="loadChart"></canvas>

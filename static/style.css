@@ -14,10 +14,24 @@ body {
     padding: 20px; 
 }
 
+.header{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.header h1{
+    margin-right: 30px;
+}
+
 /* Heading */
 h1 { 
     text-align: center; 
-    color: #0073e6; 
+    color: #0073e6;
+    display: flex;
+    justify-content: space-between; /* Stellt sicher, dass der Dark Mode Button rechts ist */
+    align-items: center; /* Vertikal ausgerichtet */
 }
 
 /* Canvas settings for charts */
@@ -38,6 +52,77 @@ body.dark-mode canvas {
     background-color: #333; /* Dark background for the charts */
 }
 
+/* Quickstats Box Styling */
+.quickstats {
+    padding: 15px;
+    border-radius: 8px;
+    /*box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);*/
+    margin-bottom: 20px;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    flex-direction: column; /* Vertikale Anordnung der Inhalte */
+}
+
+.quickstats h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+    color: #0073e6;
+}
+
+.quickstats .status-item {
+    font-size: 16px;
+    margin: 5px 0;
+}
+
+/* Status Text Colors */
+.quickstats .active {
+    color: #28a745; /* Green for active */
+}
+
+.quickstats .inactive {
+    color: #dc3545; /* Red for inactive */
+}
+
+.quickstats .device-count {
+    color: #000000; /* Black for connected devices count */
+}
+
+/* Dark Mode Styles for Quickstats */
+body.dark-mode .quickstats {
+    color: #fff;
+}
+
+
+
+body.dark-mode .quickstats .active {
+    color: #28a745; /* Green for active in dark mode */
+}
+
+body.dark-mode .quickstats .inactive {
+    color: #dc3545; /* Red for inactive in dark mode */
+}
+
+body.dark-mode .quickstats .tunnelling-yes {
+    color: #28a745; /* Green for active tunnelling in dark mode */
+}
+
+body.dark-mode .quickstats .tunnelling-no {
+    color: #dc3545; /* Red for no tunnelling in dark mode */
+}
+
+body.dark-mode .quickstats .device-count {
+    color: #fff; /* White for connected devices count in dark mode */
+}
+
+#qCont{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Dark Mode Toggle Button */
 #darkModeToggle {
     padding: 10px;
     background-color: #0073e6;
@@ -51,8 +136,7 @@ body.dark-mode canvas {
     background-color: #005bb5;
 }
 
+/* Mode Icon Styling */
 #modeIcon {
     font-size: 1.5rem;
 }
-
-

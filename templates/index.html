@@ -4,22 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Enhanced System Stats</title>
+    <!-- Chart.js über CDN einbinden -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Font Awesome über CDN einbinden für das Icon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
+    
+    <!-- Deine CSS-Datei im 'static' Ordner -->
+    <link rel="stylesheet" href="static/style.css">
 </head>
 <body>
     <div class="container">
         <h1>System Statistics</h1>
+        
+        <!-- Dark Mode Toggle Button mit Icon -->
         <button id="darkModeToggle">
             <i id="modeIcon" class="fas fa-sun"></i> <!-- Anfangs Icon als Sonne -->
         </button>
+        
+        <!-- Canvas für Diagramme -->
         <canvas id="loadChart"></canvas>
         <canvas id="memoryChart"></canvas>
         <canvas id="diskChart"></canvas>
         <canvas id="networkChart"></canvas>
         <canvas id="tempGraph"></canvas>
     </div>
-    <script src="main.js"></script>
+    
+    <!-- Deine JavaScript-Datei im 'static' Ordner -->
+    <script src="static/main.js"></script>
 </body>
 </html>

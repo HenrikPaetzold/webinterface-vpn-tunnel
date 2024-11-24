@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Connected Devices</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f4f9; color: #333; }
+        .container { width: 80%; margin: auto; text-align: center; }
+        table { width: 100%; margin-top: 20px; border-collapse: collapse; }
+        th, td { padding: 10px; text-align: left; border: 1px solid #ccc; }
+        th { background-color: #0073e6; color: white; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Connected Devices</h1>
+        <table>
+            <tr>
+                <th>MAC Address</th>
+                <th>RX Bytes</th>
+                <th>TX Bytes</th>
+                <th>Signal Strength</th>
+            </tr>
+            {% for device in devices %}
+            <tr>
+                <td>{{ device['bssid'] }}</td>
+                <td>{{ device['rx_bytes'] }}</td>
+                <td>{{ device['tx_bytes'] }}</td>
+                <td>{{ device['signal'] }} dBm</td>
+            </tr>
+            {% endfor %}
+        </table>
+        <a href="/">Back to System Stats</a>
+    </div>
+</body>
+</html>

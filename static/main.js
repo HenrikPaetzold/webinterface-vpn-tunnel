@@ -46,8 +46,8 @@ function updateChartColors() {
     
     // Updates der Diagramme mit den neuen Optionen
     loadChart.options = {...loadChart.options, ...chartOptions};
-    memoryChart.options = {...memoryChart.options, ...chartOptions};
-    diskChart.options = {...diskChart.options, ...chartOptions};
+    memoryChart.options = {...memoryChart.options, ...chartOptions, scales: {} }; // Keine Achsen für Doughnut Diagramme
+    diskChart.options = {...diskChart.options, ...chartOptions, scales: {} }; // Keine Achsen für Doughnut Diagramme
     networkChart.options = {...networkChart.options, ...chartOptions};
     tempGraph.options = {...tempGraph.options, ...chartOptions};
 
@@ -85,7 +85,7 @@ const loadChart = new Chart(document.getElementById('loadChart'), {
     }
 });
 
-// Memory Chart (in MB)
+// Memory Chart
 const memoryChart = new Chart(document.getElementById('memoryChart'), {
     type: 'doughnut',
     data: {
@@ -96,9 +96,10 @@ const memoryChart = new Chart(document.getElementById('memoryChart'), {
             backgroundColor: ['#ff6384', '#36a2eb']
         }]
     },
+    options: chartOptions
 });
 
-// Disk Chart (in GB)
+// Disk Chart
 const diskChart = new Chart(document.getElementById('diskChart'), {
     type: 'doughnut',
     data: {
@@ -109,9 +110,10 @@ const diskChart = new Chart(document.getElementById('diskChart'), {
             backgroundColor: ['#4bc0c0', '#ffcd56']
         }]
     },
+    options: chartOptions
 });
 
-// Network Chart (in KB)
+// Network Chart
 const networkChart = new Chart(document.getElementById('networkChart'), {
     type: 'line',
     data: {
@@ -134,7 +136,7 @@ const networkChart = new Chart(document.getElementById('networkChart'), {
     options: chartOptions
 });
 
-// Temp Graph (in °C)
+// Temp Graph
 const tempGraph = new Chart(document.getElementById('tempGraph'), {
     type: 'line',
     data: {
@@ -166,72 +168,6 @@ const tempGraph = new Chart(document.getElementById('tempGraph'), {
         animation: { animateRotate: true }, // Animation für die Linie
     }
 });
-
-// Funktion, um den Graphen zu aktualisieren
-function updateTemperatureGraph(temp) {
-    // Holen der aktuellen Daten
-    const currentData = tempGraph.data.datasets[0].data;
-
-    // Schiebe alle Werte um 1 nach links, um Platz für den neuen Wert zu schaffen
-    currentData.push(temp);
-    currentData.shift();
-
-    // Berechne die Farbe basierend auf der Temperatur
-    let color = `rgb(${Math.min(255, (temp * 2.55))}, ${Math.max(0, 255 - (temp * 2.55))}, 0)`; // Übergang von grün zu rot
-
-    // Aktualisiere die Daten des Graphen
-    tempGraph.data.datasets[0].data = currentData;
-    tempGraph.data.datasets[0].borderColor = color;
-
-    // Update den Graphen
-    tempGraph.update();
-}
-
-// Update-Charts und Dark Mode Integration
-setInterval(async () => {
-    const stats = await fetchStats();
-    updateCharts(stats);
-}, 2000);
-
-async function fetchStats() {
-    const response = await fetch('/stats');
-    return response.json();
-}
-
-function updateCharts(stats) {
-    // Load Average in Prozent (multiplizieren mit 100)
-    const loadData = [
-        (stats.load[0] * 100).toFixed(2),  // Wert in Prozent umrechnen und auf 2 Dezimalstellen runden
-        (stats.load[1] * 100).toFixed(2),
-        (stats.load[2] * 100).toFixed(2)
-    ];
-    loadChart.data.datasets[0].data = loadData;
-    loadChart.update();
-
-    // Memory Usage in MB
-    const usedMemoryMB = (stats.memory.used / (1024 * 1024)).toFixed(1);  // Umrechnung in MB
-    const freeMemoryMB = (stats.memory.free / (1024 * 1024)).toFixed(1);  // Umrechnung in MB
-    memoryChart.data.datasets[0].data = [usedMemoryMB, freeMemoryMB];
-    memoryChart.update();
-
-    // Disk Usage in GB
-    const usedDiskGB = (stats.disk.used / (1024 * 1024 * 1024)).toFixed(1);  // Umrechnung in GB
-    const freeDiskGB = (stats.disk.free / (1024 * 1024 * 1024)).toFixed(1);  // Umrechnung in GB
-    diskChart.data.datasets[0].data = [usedDiskGB, freeDiskGB];
-    diskChart.update();
-
-    // Netzwerk Traffic in KB
-    const sentKB = (stats.network.sent / 1024).toFixed(1);
-    const receivedKB = (stats.network.received / 1024).toFixed(1);
-    networkChart.data.datasets[0].data.push(sentKB);
-    networkChart.data.datasets[1].data.push(receivedKB);
-    networkChart.data.labels.push('');
-    networkChart.update();
-
-    // CPU Temp
-    const cpuTemp = stats.cpuTemperature;
-    updateTemperatureGraph(cpuTemp);
-}
 
 // Dark Mode Button und Icon umschalten
 const darkModeButton = document.getElementById('darkModeToggle');
@@ -266,4 +202,3 @@ darkModeButton.addEventListener('click', () => {
     // Farbänderungen nach dem Wechsel anwenden
     updateChartColors();
 });
-

@@ -363,7 +363,7 @@ document.getElementById('reloadForm').addEventListener('submit', function(event)
         if (response.ok) {
             alert('Webinterface wird aktualisiert...');
         } else {
-            alert('Fehler beim Neustart. Statuscode: ' + response.status);
+            alert('Fehler beim aktualisieren des Webinterfaces. Statuscode: ' + response.status);
         }
     })
     .catch(error => {

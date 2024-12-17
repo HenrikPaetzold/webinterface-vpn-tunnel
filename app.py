@@ -142,15 +142,11 @@ def restart():
         return f"An error occurred: {e}", 500
     return '', 204  # No content, stays on the same page
 
-@app.route('/favicon.ico')
-def favicon():
-    return '', 204  # No content, successful request
-
 @app.route('/reloadWebinterface', methods=['POST'])
 def reload():
     try:
         # Schritt 1: Git Pull im "webinterface"-Ordner ausführen
-        pull_command = "cd /path/to/webinterface && git pull"
+        pull_command = "cd ~/webinterface && git pull"
         result = subprocess.run(pull_command, shell=True, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
         # Prüfen, ob der git pull erfolgreich war

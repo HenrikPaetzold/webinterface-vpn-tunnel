@@ -63,7 +63,7 @@ def stats():
     
     
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=80, debug=False)  # Läuft auf allen IP-Adressen des Hosts und Port 80
+    app.run(host="0.0.0.0", port=80, debug=True)  # Läuft auf allen IP-Adressen des Hosts und Port 80
     
 @app.route('/quickstats')
 def quickstats():
@@ -128,3 +128,19 @@ def get_connected_devices():
         return len(mac_addresses)
     except subprocess.CalledProcessError:
         return 0
+
+@app.route('/shutdown', methods=['POST'])
+def shutdown():
+    try:
+        os.system('sudo shutdown now')
+    except Exception as e:
+        return f"An error occurred: {e}", 500
+    return '', 204  # No content, stays on the same page
+
+@app.route('/restart', methods=['POST'])
+def restart():
+    try:
+        os.system('sudo reboot')
+    except Exception as e:
+        return f"An error occurred: {e}", 500
+    return '', 204  # No content, stays on the same page

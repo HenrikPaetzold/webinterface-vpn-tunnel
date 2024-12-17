@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+^<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -39,15 +39,33 @@
                 </div>
             </div>
         </div>
+        <div id="adminPanel">
+            <h2>⚠️ Admin Panel ⚠️</h2>
+            <div class="adminButtons">
+                <form id="shutdownForm" method="POST">
+                    <button type="submit" class="adminButton">
+                        <i id="modeIcon" class="fas fa-power-off"></i> Shutdown
+                    </button>
+                </form>
+                <form id="restartForm" method="POST">
+                    <button type="submit" class="adminButton">
+                        <i id="modeIcon" class="fas fa-sync-alt"></i> Restart
+                    </button>
+                </form>
+            </div>
+        </div>
         
         
         
         <!-- Canvas für Diagramme -->
-        <canvas id="loadChart"></canvas>
-        <canvas id="memoryChart"></canvas>
-        <canvas id="diskChart"></canvas>
-        <canvas id="networkChart"></canvas>
-        <canvas id="tempGraph"></canvas>
+        <div id="chartContainer">
+            <canvas id="loadChart"></canvas>
+            <canvas id="memoryChart"></canvas>
+            <canvas id="diskChart"></canvas>
+            <canvas id="networkChart"></canvas>
+            <canvas id="tempGraph"></canvas>
+        </div>
+        
     </div>
     
     <!-- Verwende url_for, um den richtigen Pfad zu den statischen Dateien zu bekommen -->

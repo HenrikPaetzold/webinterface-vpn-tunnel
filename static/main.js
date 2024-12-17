@@ -275,20 +275,33 @@ async function fetchQuickStats() {
     // Service Status (wireguard, hostapd, dnsmasq, dhcpcd)
     const services = stats.services;
     const serviceStatus = services.every(service => service.status) ? "active" : "inactive";
-    document.getElementById('serviceStatus').className = serviceStatus;
-    document.getElementById('serviceStatus').textContent = serviceStatus.charAt(0).toUpperCase() + serviceStatus.slice(1);
+    const serviceSpan = document.querySelector('.status-item strong:contains("Service:") + span'); 
+    if (serviceSpan) {
+        serviceSpan.className = serviceStatus;
+        serviceSpan.textContent = serviceStatus.charAt(0).toUpperCase() + serviceStatus.slice(1);
+    }
 
     // Tunnelling Status (WireGuard)
     const tunnellingStatus = stats.wireguardStatus ? "active" : "inactive";
-    document.getElementById('tunnellingStatus').className = tunnellingStatus;
-    document.getElementById('tunnellingStatus').textContent = tunnellingStatus.charAt(0).toUpperCase() + tunnellingStatus.slice(1);
+    const tunnellingSpan = document.querySelector('.status-item strong:contains("Tunnelling:") + span');
+    if (tunnellingSpan) {
+        tunnellingSpan.className = tunnellingStatus;
+        tunnellingSpan.textContent = tunnellingStatus.charAt(0).toUpperCase() + tunnellingStatus.slice(1);
+    }
 
     // Uptime
-    document.getElementById('uptimeStatus').textContent = stats.uptime;
+    const uptimeSpan = document.querySelector('.status-item strong:contains("Uptime:") + span');
+    if (uptimeSpan) {
+        uptimeSpan.textContent = stats.uptime;
+    }
 
     // Connected Devices
-    document.getElementById('connectedDevices').textContent = stats.connectedDevices;
+    const connectedDevicesSpan = document.querySelector('.status-item strong:contains("Connected Devices:") + span');
+    if (connectedDevicesSpan) {
+        connectedDevicesSpan.textContent = stats.connectedDevices;
+    }
 }
+
 
 // Aufruf der Funktion zur Initialisierung der Quickstats
 fetchQuickStats();

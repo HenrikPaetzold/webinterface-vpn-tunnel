@@ -361,9 +361,11 @@ document.getElementById('reloadForm').addEventListener('submit', function(event)
     })
     .then(response => {
         if (response.ok) {
-            alert('Webinterface wird aktualisiert...');
+            alert('Das Webinterface wurde aktualisiert und neugestartet...');
         } else {
-            alert('Fehler beim aktualisieren des Webinterfaces. Statuscode: ' + response.status);
+            return response.json().then(data => {
+                throw new Error(data.error || 'Unbekannter Fehler');
+            });
         }
     })
     .catch(error => {

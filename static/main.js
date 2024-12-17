@@ -353,10 +353,10 @@ document.getElementById('restartForm').addEventListener('submit', function(event
     });
 });
 
-document.getElementById('restartForm').addEventListener('submit', function(event) {
+document.getElementById('reloadForm').addEventListener('submit', function(event) {
     event.preventDefault(); // Verhindert das Standard-Formular-Submit-Verhalten
 
-    fetch('/restart', {
+    fetch('/reloadWebinterface', {
         method: 'POST'
     })
     .then(response => {

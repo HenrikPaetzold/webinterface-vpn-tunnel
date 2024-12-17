@@ -275,7 +275,7 @@ async function fetchQuickStats() {
     // Service Status (wireguard, hostapd, dnsmasq, dhcpcd)
     const services = stats.services;
     const serviceStatus = services.every(service => service.status) ? "active" : "inactive";
-    const serviceSpan = document.querySelector('.status-item strong:contains("Service:") + span'); 
+    const serviceSpan = document.querySelector('.status-item strong:contains("Service:") + span');
     if (serviceSpan) {
         serviceSpan.className = serviceStatus;
         serviceSpan.textContent = serviceStatus.charAt(0).toUpperCase() + serviceStatus.slice(1);
@@ -301,6 +301,8 @@ async function fetchQuickStats() {
         connectedDevicesSpan.textContent = stats.connectedDevices;
     }
 }
+
+
 
 
 // Aufruf der Funktion zur Initialisierung der Quickstats

@@ -275,7 +275,9 @@ async function fetchQuickStats() {
     // Service Status (wireguard, hostapd, dnsmasq, dhcpcd)
     const services = stats.services;
     const serviceStatus = services.every(service => service.status) ? "active" : "inactive";
-    const serviceSpan = document.querySelector('.status-item strong:contains("Service:") + span');
+
+    // Durchsuche alle status-item Elemente und finde das span für "Service"
+    const serviceSpan = Array.from(document.querySelectorAll('.status-item')).find(item => item.querySelector('strong') && item.querySelector('strong').textContent.includes("Service:")).querySelector('span');
     if (serviceSpan) {
         serviceSpan.className = serviceStatus;
         serviceSpan.textContent = serviceStatus.charAt(0).toUpperCase() + serviceStatus.slice(1);
@@ -283,20 +285,22 @@ async function fetchQuickStats() {
 
     // Tunnelling Status (WireGuard)
     const tunnellingStatus = stats.wireguardStatus ? "active" : "inactive";
-    const tunnellingSpan = document.querySelector('.status-item strong:contains("Tunnelling:") + span');
+
+    // Durchsuche alle status-item Elemente und finde das span für "Tunnelling"
+    const tunnellingSpan = Array.from(document.querySelectorAll('.status-item')).find(item => item.querySelector('strong') && item.querySelector('strong').textContent.includes("Tunnelling:")).querySelector('span');
     if (tunnellingSpan) {
         tunnellingSpan.className = tunnellingStatus;
         tunnellingSpan.textContent = tunnellingStatus.charAt(0).toUpperCase() + tunnellingStatus.slice(1);
     }
 
     // Uptime
-    const uptimeSpan = document.querySelector('.status-item strong:contains("Uptime:") + span');
+    const uptimeSpan = Array.from(document.querySelectorAll('.status-item')).find(item => item.querySelector('strong') && item.querySelector('strong').textContent.includes("Uptime:")).querySelector('span');
     if (uptimeSpan) {
         uptimeSpan.textContent = stats.uptime;
     }
 
     // Connected Devices
-    const connectedDevicesSpan = document.querySelector('.status-item strong:contains("Connected Devices:") + span');
+    const connectedDevicesSpan = Array.from(document.querySelectorAll('.status-item')).find(item => item.querySelector('strong') && item.querySelector('strong').textContent.includes("Connected Devices:")).querySelector('span');
     if (connectedDevicesSpan) {
         connectedDevicesSpan.textContent = stats.connectedDevices;
     }

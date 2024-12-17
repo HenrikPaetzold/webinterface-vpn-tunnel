@@ -142,5 +142,32 @@ def restart():
         return f"An error occurred: {e}", 500
     return '', 204  # No content, stays on the same page
 
+@app.route('/favicon.ico')
+def favicon():
+    return '', 204  # No content, successful request
+
+@app.route('/reloadWebinterface', methods=['POST'])
+def reload():
+    try:
+        # Schritt 1: Git Pull im "webinterface"-Ordner ausführen
+        pull_command = "cd /path/to/webinterface && git pull"
+        result = subprocess.run(pull_command, shell=True, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+
+        # Prüfen, ob der git pull erfolgreich war
+        if result.returncode != 0:
+            return jsonify({"error": "Git pull fehlgeschlagen", "details": result.stderr.decode()}), 500
+
+        # Schritt 2: Neustart des webinterface-Dienstes
+        restart_command = "sudo systemctl restart webinterface"
+        result = subprocess.run(restart_command, shell=True, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+
+        if result.returncode != 0:
+            return jsonify({"error": "Fehler beim Neustart von webinterface", "details": result.stderr.decode()}), 500
+
+        return '', 204  # Kein Inhalt, erfolgreiche Anfrage
+
+    except subprocess.CalledProcessError as e:
+        return jsonify({"error": "Ein Fehler ist aufgetreten", "details": e.stderr.decode()}), 500
+
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=80, debug=True)  # Läuft auf allen IP-Adressen des Hosts und Port 80

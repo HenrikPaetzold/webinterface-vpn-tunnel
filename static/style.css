@@ -148,9 +148,16 @@ body.dark-mode .quickstats .device-count {
     }
 }
 
+.red {
+    background-color: #e60000;
+}
+
+.yellow {
+    background-color: rgb(255, 204, 0);
+}
+
 .adminButton {
     padding: 10px;
-    background-color: #e60000;
     color: #fff;
     border: none;
     cursor: pointer;
@@ -165,7 +172,7 @@ body.dark-mode .quickstats .device-count {
     transition: background-color 0.3s ease; /* Smooth transition für normalen Zustand */
 }
 
-.adminButton:hover {
+.adminButton.red:hover {
     animation: blinkRed 1s infinite; /* Animation wird unendlich wiederholt */
 }
 

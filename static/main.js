@@ -352,3 +352,21 @@ document.getElementById('restartForm').addEventListener('submit', function(event
         alert('Fehler: ' + error);
     });
 });
+
+document.getElementById('restartForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // Verhindert das Standard-Formular-Submit-Verhalten
+
+    fetch('/restart', {
+        method: 'POST'
+    })
+    .then(response => {
+        if (response.ok) {
+            alert('Webinterface wird aktualisiert...');
+        } else {
+            alert('Fehler beim Neustart. Statuscode: ' + response.status);
+        }
+    })
+    .catch(error => {
+        alert('Fehler: ' + error);
+    });
+});

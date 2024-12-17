@@ -172,7 +172,7 @@ body.dark-mode .quickstats .device-count {
 .adminButtons {
     display: flex;
     justify-content: space-evenly; /* Verteilte Knöpfe mit Abstand */
-    width: 20%; /* Stellt sicher, dass der Container die volle Breite einnimmt */
+    width: 50%; /* Stellt sicher, dass der Container die volle Breite einnimmt */
 }
 
 

@@ -61,10 +61,6 @@ def stats():
         'cpuTemperature': temp  # Aktuelle CPU-Temperatur zurückgeben
     })
     
-    
-if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=80, debug=True)  # Läuft auf allen IP-Adressen des Hosts und Port 80
-    
 @app.route('/quickstats')
 def quickstats():
     # Check if services are active
@@ -144,3 +140,6 @@ def restart():
     except Exception as e:
         return f"An error occurred: {e}", 500
     return '', 204  # No content, stays on the same page
+
+if __name__ == '__main__':
+    app.run(host="0.0.0.0", port=80, debug=True)  # Läuft auf allen IP-Adressen des Hosts und Port 80
